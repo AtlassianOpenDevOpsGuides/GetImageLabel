@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  GetImageLabelFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: getImageLabel/
+      Handler: get-image-label
+      Runtime: go1.x
+      Tracing: Active
+      Policies:
+        - AmazonDynamoDBFullAccess
+        - AmazonS3FullAccess
+        - AdministratorAccess
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /get-image-label
+            Method: GET
+      Tags:
+        Name: getImageLabel
+        business_unit: agile_devops_pmm
+        service_name: open_devops_image_rec
+        resource_owner: wmarusiak
+
+Outputs:
+  GetImageLabelAPI:
+    Description: "API Gateway endpoint URL for Prod environment for First Function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/get-image-label/"
+  GetImageLabelFunction:
+    Description: "First Lambda Function ARN"
+    Value: !GetAtt GetImageLabelFunction.Arn
+  GetImageLabelIamRole:
+    Description: "Implicit IAM Role created for Get Image Label function"
+    Value: !GetAtt GetImageLabelFunctionRole.Arn
