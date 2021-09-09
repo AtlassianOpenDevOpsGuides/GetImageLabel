@@ -23,11 +23,6 @@ Resources:
           Properties:
             Path: /get-image-label
             Method: GET
-      Tags:
-        Name: getImageLabel
-        business_unit: agile_devops_pmm
-        service_name: open_devops_image_rec
-        resource_owner: wmarusiak
 
 Outputs:
   GetImageLabelAPI:
